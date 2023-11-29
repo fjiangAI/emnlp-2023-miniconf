@@ -1,7 +1,0 @@
-build: false
-data_dir: data/emnlp_2023
-port: 7777
-debug: true
-host: '0.0.0.0'
-out_dir: build/
-time_zone: Singapore
