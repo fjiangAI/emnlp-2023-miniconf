@@ -1,0 +1,489 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+
+  <!-- External Javascript libs  -->
+  <script src="https://cdn.jsdelivr.net/npm/d3@5/dist/d3.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/handlebars@4.7.3/dist/handlebars.min.js"
+    integrity="sha256-/PJBs6QWvXijOFIX04kZpLb6ZtSQckdOIavLWKKOgXU=" crossorigin="anonymous"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
+    integrity="sha256-WqU1JavFxSAMcLP2WIOI+GB2zWmShMI82mTpLDcqFUg=" crossorigin="anonymous"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/min/moment.min.js"
+    integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/moment-timezone@0.5.28/builds/moment-timezone-with-data.min.js"
+    integrity="sha256-IWYg4uIC8/erItNXYvLtyYHioRi2zT1TFva8qaAU/ww=" crossorigin="anonymous"></script>
+
+  <!-- https://developer.snapappointments.com/bootstrap-select/ -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+
+  <!-- Library libs -->
+  <script src="static/js/typeahead.bundle.js"></script>
+
+  <script src="https://craig.global.ssl.fastly.net/js/mousetrap/mousetrap.min.js?a4098"></script>
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+    integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+    integrity="sha256-YLGeXaapI0/5IgZopewRJcFXomhRMlYYjugPLSyNjTY=" crossorigin="anonymous">
+
+  <!-- External Fonts (no google for china) -->
+  <link href="static/css/Lato.css" rel="stylesheet" />
+  <link href="static/css/Exo.css" rel="stylesheet" />
+  <link href="static/css/Cuprum.css" rel="stylesheet" />
+
+  <link rel="stylesheet" href="static/css/main.css" />
+  <link rel="stylesheet" href="static/css/chats-modal.css" />
+  <link rel="stylesheet" href="static/css/lazy_load.css" />
+  <link rel="stylesheet" href="static/css/typeahead.css" />
+  <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.3.200/build/pdf.min.js"></script>
+  <script src="static/js/pdf_render.js"></script>
+
+  <title>EMNLP2023: Schedule</title>
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar/main.css" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar/main.min.js" crossorigin="anonymous"></script>
+<script>
+    // We use https://fullcalendar.io/
+    document.addEventListener('DOMContentLoaded', function() {
+    var initial_view = 'timeGridWeek';
+    window.fc_current_view = initial_view;
+    var initialTimeZone = moment.tz.guess();
+    var timeZoneSelectorEl = document.getElementById('time-zone-selector');
+    var eventTypeSelectorEl = document.getElementById('event-type-selector');
+
+    // M: This variable is here to be filled inside the "$.get" function
+    var calendar = null;
+
+    $.get("/schedule.json", function (data, status) {
+        var events = data;
+        // Fun fact! I think this variable is no longer in use
+        var event_lookup = Object.fromEntries(events.map(e => [e.title, e]));
+        // get event types
+        // var uniqEvents = [...new Set(events.map(x=>x.type))]
+        //  ["Tutorials", "Plenary Sessions", "Workshops", "Socials", "QA Sessions"]
+
+        var calendarEl = document.getElementById('calendar');
+        var calendar_n = new FullCalendar.Calendar(calendarEl, {
+            initialView: initial_view,
+            initialDate: '2023-12-06',
+            timeZone: initialTimeZone,
+            allDaySlot: false,
+            nowIndicator: true,
+            slotLabelFormat: {
+                hour: '2-digit',
+                minute: '2-digit',
+                meridiem: false,
+                hour12: false
+            },
+            eventTimeFormat: {
+                hour: '2-digit',
+                minute: '2-digit',
+                meridiem: false,
+                timeZoneName: 'short',
+                hour12: false
+            },
+            visibleRange: {
+                start: '2023-12-06',
+                end: '2023-12-10'
+            },
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'timeGridWeek,timeGridDay'
+            },
+            slotEventOverlap: false,
+            slotDuration: "00:30:00",
+            height: "auto",
+            events: function (info, successCallback, failureCallback) {
+                // We need to change the time zone manually,
+                // we cannot use static event data
+                // Deep copy
+                let tz = info.timeZone;
+                //get selected event types
+                let eventTypes = [...eventTypeSelectorEl.options].filter(option => option.selected).map(option => option.value);
+
+                if (tz === "Local") {
+                    tz = moment.tz.guess();
+                }
+
+                let view = window.fc_current_view;
+
+                let zoned_events = JSON.parse(JSON.stringify(events));
+                for (var i = 0; i < zoned_events.length; i++) {
+                    var obj = zoned_events[i];
+                    obj["start"] = moment(obj["start"]).tz(tz).format();
+                    obj["end"] = moment(obj["end"]).tz(tz).format();
+
+                    if (obj["view"] === "day" && view !== "timeGridDay" ||
+                        obj["view"] === "week" && view !== "timeGridWeek" ||
+                        !eventTypes.includes(obj["type"])) {
+                        obj["display"] = "none";
+                    }
+                }
+                successCallback(zoned_events);
+            },
+            eventClick: function (eventClickInfo) {
+                var e = eventClickInfo.event;
+                // Prevent reloading the current page, as we clicked
+                // on a hyperlink on the current page
+                eventClickInfo.jsEvent.preventDefault();
+
+                if (e.url) {
+                    window.open(e.url, "_blank");
+                    return false;
+                }
+            },
+            eventDidMount: function (info) {
+                var title = info.event.title;
+                $(info.el).popover({
+                    title: title,
+                    html: true,
+                    content: info.timeText,//+ "<br/> Room: " + event_lookup[title].location,
+                    placement: 'top',
+                    trigger: 'hover',
+                    container: 'body'
+                })
+            },
+            // Render HTML from title as HTML
+            eventContent: function (arg) {
+                return {html: arg.event.title}
+            },
+            datesSet: function (dateInfo) {
+                window.fc_current_view = dateInfo.view.type;
+                dateInfo.view.calendar.refetchEvents();
+            },
+
+        });
+        // M: We now assign the "calendar" variable the value we just calculated
+        // above. Why not assigning it directly? Because I'm trying to touch
+        // the minimum possible amount of code.
+        calendar = calendar_n;
+        // I did not find a better way than using global variables
+        window.fc_current_view = calendar.view.type;
+        calendar.render();
+    });
+    // M: I moved these functions from the above loop because otherwise they
+    // don't work well in Firefox. I believe the issue is one of script execution:
+    // I imagine that the Event Listeners are not triggered if inside a function
+    // that's not running?
+    moment.tz.names().forEach(function (timeZone) {
+        var optionEl;
+        if (timeZone !== 'UTC') { // UTC is already in the list
+            optionEl = document.createElement('option');
+            optionEl.value = timeZone;
+            optionEl.innerText = timeZone;
+            timeZoneSelectorEl.appendChild(optionEl);
+        }
+    });
+
+    // when the timezone selector changes, dynamically change the calendar option
+    timeZoneSelectorEl.addEventListener('change', function () {
+        calendar.setOption('timeZone', this.value);
+    });
+
+    // when eventype changes, refetch and hide unselected events
+    eventTypeSelectorEl.addEventListener('change', function () {
+        calendar.refetchEvents();
+    })
+});
+
+</script>
+<script src="static/js/lazy_load.js"></script>
+
+
+  <!-- Favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="static/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="static/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="static/favicon/favicon-16x16.png">
+  <link rel="manifest" href="static/favicon/site.webmanifest">
+  <link rel="mask-icon" href="static/favicon/safari-pinned-tab.svg" color="#5bbad5">
+  <link rel="shortcut icon" href="static/favicon/favicon.ico">
+  <meta name="msapplication-TileColor" content="#2d89ef">
+  <meta name="msapplication-config" content="static/favicon/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
+</head>
+
+<body>
+  <!-- NAV -->
+  
+  <!-- ('https://2023.aclweb.org/faq/', 'FAQ'), -->
+  <!-- ('https://2023.aclweb.org/committees/organization/', 'Organizers'), -->
+  <!-- ('https://2023.aclweb.org/sponsors/', 'Sponsors') -->
+
+  <!-- Add back ('livestream.html', 'Livestream'),
+    ('about.html', 'Help'),
+    ('plenary_sessions.html', 'Plenary'),
+    ('livestream.html', 'Livestream'),
+    (config.gather_town , 'Gather'),
+    for a new conference
+    -->
+
+  <nav class="navbar sticky-top navbar-expand-lg navbar-light  bg-emnlp mr-auto customnav" id="main-nav">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <img class="logo" src="static/images/emnlp2023/emnlp-2023-logo.png" height="45px"
+          width="auto" alt="EMNLP 2023" />
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse text-right flex-grow-1" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item ">
+            
+            <a class="nav-link" href="index.html">Home</a>
+            
+          </li>
+          
+          <li class="nav-item active">
+            
+            <a class="nav-link" href="schedule.html">Schedule</a>
+            
+          </li>
+          
+          <li class="nav-item ">
+            
+            <a class="nav-link" href="sessions.html">Sessions</a>
+            
+          </li>
+          
+          <li class="nav-item ">
+            
+            <a class="nav-link" href="papers.html">Papers</a>
+            
+          </li>
+          
+          <li class="nav-item ">
+            
+            <a class="nav-link" href="tutorials.html">Tutorials</a>
+            
+          </li>
+          
+          <li class="nav-item ">
+            
+            <a class="nav-link" href="workshops.html">Workshops</a>
+            
+          </li>
+          
+          <li class="nav-item ">
+            
+            <a class="nav-link" href="map.html">Map</a>
+            
+          </li>
+          
+          <li class="nav-item ">
+            
+            <a class="nav-link" href="https://acl.rocket.chat" target="_blank"><u>Chat</u></a>
+            
+          </li>
+          
+          <li class="nav-item ">
+            
+            <a class="nav-link" href="https://app.gather.town/app/5OscLswEEuYf2Psb/EMNLP2023" target="_blank"><u>GatherTown</u></a>
+            
+          </li>
+          
+          <li class="nav-item ">
+            
+            <a class="nav-link" href="https://2023.emnlp.org/" target="_blank"><u>Main Site</u></a>
+            
+          </li>
+          
+          <li class="nav-item ">
+            
+            <a class="nav-link" href="https://drive.google.com/file/d/13hUJi0VUzrySldAK2Rd-FLO_9DDPPDP6/view
+  " target="_blank"><u>Handbook</u></a>
+            
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+
+  
+  <!-- User Overrides -->
+   
+
+      
+      <div class="container-fuid">
+        
+    <!-- Heading -->
+    <div class="heading">
+      
+<div class="my-3"></div>
+<div class="row p-4">
+  <div class="col-12 bd-content">
+    <h1 class="text-center">Schedule</h1>
+  </div>
+</div>
+  <div class="text-muted text-center">
+  Use <strong>"day" view to show more details</strong> about ongoing events on each day.
+  <br />
+  Click each session card in the day view to find out all papers in the specific session.
+  </div>
+
+    </div>
+    <div class="tabs pt-3">
+      <!-- Tabs -->
+      <div class="tabs pt-3">
+         
+      </div>
+      <!-- Content -->
+      <div class="content">
+        
+  <div class="form-group col">
+    <label for="time-zone-selector">Timezone:</label>
+    <select id="time-zone-selector" class="selectpicker" data-live-search="true">
+      <option value="local" selected>Local</option>
+      <option value="UTC">UTC</option>
+    </select>
+    <label for="event-type-selector">&nbsp;Event type:</label>
+    <select id="event-type-selector" class="selectpicker" multiple>
+        
+        <option value="Breaks" selected>Breaks</option>
+        
+        <option value="Paper Sessions" selected>Paper Sessions</option>
+        
+        <option value="Plenary Sessions" selected>Plenary Sessions</option>
+        
+        <option value="Socials" selected>Socials</option>
+        
+        <option value="Tutorials" selected>Tutorials</option>
+        
+        <option value="Workshops" selected>Workshops</option>
+        
+    </select>
+    <div id='calendar'></div>
+  </div>
+  
+
+<script type="text/javascript">
+  lazyLoader();
+</script>
+
+
+      </div>
+    </div>
+    
+    
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9X8H03BYC2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-9X8H03BYC2");
+    </script>
+
+    <!-- Footer -->
+    <footer class="footer bg-light p-4">
+      <div class="container">
+        <p class="float-left">
+          <img src="static/images/emnlp2023/emnlp-2023-logo.png" height="45px"
+            width="auto" align="center">
+          <span class="lead">EMNLP 2023</span>
+        </p>
+        <p class="float-right"><a href="#" class="text-dark">Back to Top</a></p>
+        <p class="text-center">© 2023 Association for Computational Linguistics</p>
+      </div>
+    </footer>
+
+    <!-- Code for hash tags -->
+    <script type="text/javascript">
+      $(document).ready(function () {
+        if (location.hash !== "") {
+          $('a[href="' + location.hash + '"]').tab("show");
+        }
+
+        $("a[data-toggle='tab']").on("shown.bs.tab", function (e) {
+          var hash = $(e.target).attr("href");
+          if (hash.substr(0, 1) == "#") {
+            var position = $(window).scrollTop();
+            location.replace("#" + hash.substr(1));
+            $(window).scrollTop(position);
+          }
+        });
+      });
+    </script>
+    <script src="static/js/lazy_load.js"></script>
+    
+    <div class="modal left fade" id="chatsModal" tabindex="" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document" style="max-height: 100% !important;">
+        <div class="modal-content" style="max-height: 100% !important;">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel">Active Chats</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div style="margin-bottom: 1em;">
+    <div class="stats-last-update text-muted" id="highly-active-chats-last-update"></div>
+    <a id="highly-active-chats-btn-refresh" href="#" class="text-primary" style="display: none;">Refresh now</a>
+</div>
+
+<div id="highly-active-chats-list">
+</div>
+
+<div class="text-center" id="highly-active-chats-progress-bar" style="margin-bottom: 80em;">
+    <div class="spinner-border text-primary" style="margin-top: 3em; width: 3rem; height: 3rem;" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+</div>
+
+<br/>
+<p class="text-muted">
+    <strong>How it works: </strong>
+    We calculate the number of new messages for every channel in the last N seconds. Then, we sort them descendingly.
+    Channels with no new messages will be randomly shuffled. Please note that the number of messages might not be accurate.
+</p>
+
+<script src="static/js/highly-active-chats.js"></script>
+<script>
+    let channel_stats_server = "https://emnlp2020-channels-stats.azure-api.net"
+    $(document).ready( function () {
+        $('[data-toggle="tooltip"]').tooltip();
+        //load_stats();
+    });
+</script>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

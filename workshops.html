@@ -1,0 +1,917 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+
+  <!-- External Javascript libs  -->
+  <script src="https://cdn.jsdelivr.net/npm/d3@5/dist/d3.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/handlebars@4.7.3/dist/handlebars.min.js"
+    integrity="sha256-/PJBs6QWvXijOFIX04kZpLb6ZtSQckdOIavLWKKOgXU=" crossorigin="anonymous"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
+    integrity="sha256-WqU1JavFxSAMcLP2WIOI+GB2zWmShMI82mTpLDcqFUg=" crossorigin="anonymous"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/min/moment.min.js"
+    integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/moment-timezone@0.5.28/builds/moment-timezone-with-data.min.js"
+    integrity="sha256-IWYg4uIC8/erItNXYvLtyYHioRi2zT1TFva8qaAU/ww=" crossorigin="anonymous"></script>
+
+  <!-- https://developer.snapappointments.com/bootstrap-select/ -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+
+  <!-- Library libs -->
+  <script src="static/js/typeahead.bundle.js"></script>
+
+  <script src="https://craig.global.ssl.fastly.net/js/mousetrap/mousetrap.min.js?a4098"></script>
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+    integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+    integrity="sha256-YLGeXaapI0/5IgZopewRJcFXomhRMlYYjugPLSyNjTY=" crossorigin="anonymous">
+
+  <!-- External Fonts (no google for china) -->
+  <link href="static/css/Lato.css" rel="stylesheet" />
+  <link href="static/css/Exo.css" rel="stylesheet" />
+  <link href="static/css/Cuprum.css" rel="stylesheet" />
+
+  <link rel="stylesheet" href="static/css/main.css" />
+  <link rel="stylesheet" href="static/css/chats-modal.css" />
+  <link rel="stylesheet" href="static/css/lazy_load.css" />
+  <link rel="stylesheet" href="static/css/typeahead.css" />
+  <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.3.200/build/pdf.min.js"></script>
+  <script src="static/js/pdf_render.js"></script>
+
+  <title>EMNLP2023: Workshops</title>
+  
+
+  <!-- Favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="static/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="static/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="static/favicon/favicon-16x16.png">
+  <link rel="manifest" href="static/favicon/site.webmanifest">
+  <link rel="mask-icon" href="static/favicon/safari-pinned-tab.svg" color="#5bbad5">
+  <link rel="shortcut icon" href="static/favicon/favicon.ico">
+  <meta name="msapplication-TileColor" content="#2d89ef">
+  <meta name="msapplication-config" content="static/favicon/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
+</head>
+
+<body>
+  <!-- NAV -->
+  
+  <!-- ('https://2023.aclweb.org/faq/', 'FAQ'), -->
+  <!-- ('https://2023.aclweb.org/committees/organization/', 'Organizers'), -->
+  <!-- ('https://2023.aclweb.org/sponsors/', 'Sponsors') -->
+
+  <!-- Add back ('livestream.html', 'Livestream'),
+    ('about.html', 'Help'),
+    ('plenary_sessions.html', 'Plenary'),
+    ('livestream.html', 'Livestream'),
+    (config.gather_town , 'Gather'),
+    for a new conference
+    -->
+
+  <nav class="navbar sticky-top navbar-expand-lg navbar-light  bg-emnlp mr-auto customnav" id="main-nav">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <img class="logo" src="static/images/emnlp2023/emnlp-2023-logo.png" height="45px"
+          width="auto" alt="EMNLP 2023" />
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse text-right flex-grow-1" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item ">
+            
+            <a class="nav-link" href="index.html">Home</a>
+            
+          </li>
+          
+          <li class="nav-item ">
+            
+            <a class="nav-link" href="schedule.html">Schedule</a>
+            
+          </li>
+          
+          <li class="nav-item ">
+            
+            <a class="nav-link" href="sessions.html">Sessions</a>
+            
+          </li>
+          
+          <li class="nav-item ">
+            
+            <a class="nav-link" href="papers.html">Papers</a>
+            
+          </li>
+          
+          <li class="nav-item ">
+            
+            <a class="nav-link" href="tutorials.html">Tutorials</a>
+            
+          </li>
+          
+          <li class="nav-item active">
+            
+            <a class="nav-link" href="workshops.html">Workshops</a>
+            
+          </li>
+          
+          <li class="nav-item ">
+            
+            <a class="nav-link" href="map.html">Map</a>
+            
+          </li>
+          
+          <li class="nav-item ">
+            
+            <a class="nav-link" href="https://acl.rocket.chat" target="_blank"><u>Chat</u></a>
+            
+          </li>
+          
+          <li class="nav-item ">
+            
+            <a class="nav-link" href="https://app.gather.town/app/5OscLswEEuYf2Psb/EMNLP2023" target="_blank"><u>GatherTown</u></a>
+            
+          </li>
+          
+          <li class="nav-item ">
+            
+            <a class="nav-link" href="https://2023.emnlp.org/" target="_blank"><u>Main Site</u></a>
+            
+          </li>
+          
+          <li class="nav-item ">
+            
+            <a class="nav-link" href="https://drive.google.com/file/d/13hUJi0VUzrySldAK2Rd-FLO_9DDPPDP6/view
+  " target="_blank"><u>Handbook</u></a>
+            
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+
+  
+  <!-- User Overrides -->
+   
+
+      
+      <div class="container">
+        
+    <!-- Heading -->
+    <div class="heading">
+      
+<div class="my-3"></div>
+<div class="row p-4">
+  <div class="col-12 bd-content">
+    <h1 class="text-center">Workshops</h1>
+  </div>
+</div>
+
+<div class="text-center text-muted">
+  You can also view the schedule by going to the "day" view on the <a href="schedule.html" target="_blank">Schedule</a> page.
+</div>
+
+    </div>
+    <div class="tabs pt-3">
+      <!-- Tabs -->
+      <div class="tabs pt-3">
+         
+      </div>
+      <!-- Content -->
+      <div class="content">
+        
+<div class="workshops">
+  <div class="cards row">
+  
+  <div class="col-md-6 col-sm-12 p-3">
+    <div class="card p-3 shadow p-3 mb-5 bg-light rounded"
+      style="box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2); height:100%;">
+
+      <div class="m-3 text-muted text-center">
+        <h4>
+          <a href="workshop_ArabicNLP.html" class="main-title">
+            ArabicNLP
+          </a>
+        </h4>
+      </div>
+
+      <div class="m-3 text-muted text-center">
+        <span class="card-title h3">
+          TBD
+        </span>
+      </div>
+
+      <!-- not working right now-->
+      <!--  -->
+    </div>
+  </div>
+  
+  <div class="col-md-6 col-sm-12 p-3">
+    <div class="card p-3 shadow p-3 mb-5 bg-light rounded"
+      style="box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2); height:100%;">
+
+      <div class="m-3 text-muted text-center">
+        <h4>
+          <a href="workshop_ArgMining.html" class="main-title">
+            ArgMining
+          </a>
+        </h4>
+      </div>
+
+      <div class="m-3 text-muted text-center">
+        <span class="card-title h3">
+          The ArgMining workshop series is the premier research forum that drives the exploration of argument mining tasks in all domains of discourse. Since its inception in 2014, it has been held annually for nine consecutive years at major NLP conferences: ACL (2014, 2016, 2019), NAACL (2015), EMNLP (2017, 2018, 2021), and COLING (2020, 2022). Seeing the continuous emergence of argument mining research in the last years, this workshop provides a follow-on forum for the previous editions and the many recent relevant events. The workshop will take place in a hybrid setting and feature a panel session reflecting on the past and the future of argument mining in celebration of the 10th anniversary of the workshop series, a keynote speech, paper presentations, as well as two shared tasks.
+        </span>
+      </div>
+
+      <!-- not working right now-->
+      <!--  -->
+    </div>
+  </div>
+  
+  <div class="col-md-6 col-sm-12 p-3">
+    <div class="card p-3 shadow p-3 mb-5 bg-light rounded"
+      style="box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2); height:100%;">
+
+      <div class="m-3 text-muted text-center">
+        <h4>
+          <a href="workshop_BLP.html" class="main-title">
+            BLP
+          </a>
+        </h4>
+      </div>
+
+      <div class="m-3 text-muted text-center">
+        <span class="card-title h3">
+          Bangla - a member of the Indo-Aryan language family, is ranked as the 6th most widely spoken language across the world, with 230 million native speakers from Bangladesh and India. This morphologically rich language has a long-standing literacy tradition, with diverse dialects and language dependent challenges. Bangla, with three decade of research history is still considered a low-resource language in the natural language processing (NLP) and speech community mainly due to the limited and scattered research efforts by individual researchers. These line of sparse works are not highly visible to the international research community.
+
+Therefore, this workshop aims to provide a forum for researchers to share and discuss their ongoing work with the international community. Following the success of prior local editions of the conferences in 2018 and 2019, in this first edition of the workshop, we will focus on Bangla, which is a low-resource language, and assess its current state-of-the-art and discuss strategies to make further progress in both NLP, Speech and multimodal research. Through this workshop, we plan to bring researchers together to come up with frameworks and strategies that can later support to other low-resource languages. This workshop is timely given the continued rise in research projects focusing on low-resource and multilingual studies. We particularly encourage researchers to submit their papers focusing on novel methodologies and resources that help towards the progress of Bangla and other low-resource languages. Novel methodologies include, but are not limited to, zero-shot learning, unsupervised learning, and simple yet effective methods applicable to low-computation scenarios.
+        </span>
+      </div>
+
+      <!-- not working right now-->
+      <!--  -->
+    </div>
+  </div>
+  
+  <div class="col-md-6 col-sm-12 p-3">
+    <div class="card p-3 shadow p-3 mb-5 bg-light rounded"
+      style="box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2); height:100%;">
+
+      <div class="m-3 text-muted text-center">
+        <h4>
+          <a href="workshop_BigPicture.html" class="main-title">
+            BigPicture
+          </a>
+        </h4>
+      </div>
+
+      <div class="m-3 text-muted text-center">
+        <span class="card-title h3">
+          The Big Picture Workshop provides a dedicated venue for exploring and distilling broader NLP research narratives. All research exists within a larger context, and progress is made by standing on the shoulders of giants: building on the foundations laid by earlier researchers. In light of rapid publication rates and concise paper formats, it has become increasingly difficult, however, to recognize the larger story to which a paper is connected. The Big Picture Workshop invites researchers to reflect on how their individual contributions fit within the overall research landscape and what stories they are telling with their bodies of research. The goals of the workshop are to enhance communication and understanding between different lines of work, highlight how works connect and build on each other, generate insights that are difficult to glean without combining and reconciling different research narratives, encourage broader collaboration and awareness of prior work in the NLP community, and facilitate understanding of trajectories and insights within the field of NLP.
+        </span>
+      </div>
+
+      <!-- not working right now-->
+      <!--  -->
+    </div>
+  </div>
+  
+  <div class="col-md-6 col-sm-12 p-3">
+    <div class="card p-3 shadow p-3 mb-5 bg-light rounded"
+      style="box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2); height:100%;">
+
+      <div class="m-3 text-muted text-center">
+        <h4>
+          <a href="workshop_BlackboxNLP.html" class="main-title">
+            BlackboxNLP
+          </a>
+        </h4>
+      </div>
+
+      <div class="m-3 text-muted text-center">
+        <span class="card-title h3">
+          TBD
+        </span>
+      </div>
+
+      <!-- not working right now-->
+      <!--  -->
+    </div>
+  </div>
+  
+  <div class="col-md-6 col-sm-12 p-3">
+    <div class="card p-3 shadow p-3 mb-5 bg-light rounded"
+      style="box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2); height:100%;">
+
+      <div class="m-3 text-muted text-center">
+        <h4>
+          <a href="workshop_CALCS.html" class="main-title">
+            CALCS
+          </a>
+        </h4>
+      </div>
+
+      <div class="m-3 text-muted text-center">
+        <span class="card-title h3">
+          Bilingual and multilingual speakers often mix languages when they communicate with other multilingual speakers in what is usually known as code-switching (CS). CS can occur on various
+language levels including inter-sentential, intra-sentential, and even morphological. Practically, it presents long-standing challenges for language technologies, such as machine translation, ASR, language generation, information retrieval and extraction, and semantic processing. Models trained for one language can quickly break down when there is input mixed in from another. The recent breakthough on using multilingual pre-trained language models (LMs) have shown possibility to yield subpar performance on CS data.
+Considering the ubiquitous nature of CS in informal text such as newsgroups, tweets threads, and other forms of social media communication, and the number of multilingual speakers worldwide that use these platforms, addressing the challenge of processing CS data continues to be of great practical value. This workshop aims to bring together researchers interested in technology for mixed language data, in either spoken or written form, and increase community awareness of the different efforts developed to date in this space.
+        </span>
+      </div>
+
+      <!-- not working right now-->
+      <!--  -->
+    </div>
+  </div>
+  
+  <div class="col-md-6 col-sm-12 p-3">
+    <div class="card p-3 shadow p-3 mb-5 bg-light rounded"
+      style="box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2); height:100%;">
+
+      <div class="m-3 text-muted text-center">
+        <h4>
+          <a href="workshop_CRAC.html" class="main-title">
+            CRAC
+          </a>
+        </h4>
+      </div>
+
+      <div class="m-3 text-muted text-center">
+        <span class="card-title h3">
+          Since 2016, the yearly CRAC (and its predecessor, CORBON) workshop has become the primary forum for researchers interested in the computational modeling of reference, anaphora, and coreference to discuss and publish their results. Over the years, this workshop series has successfully organized five shared tasks, which stimulated interest in new problems in this area of research, facilitated the discussion and dissemination of results on new problems/directions (e.g., multimodal reference resolution), and helped expand the coreference community that used to be dominated by European researchers to include young researchers from the Americas. The aim of the workshop is to provide a forum where work on all aspects of computational work on anaphora resolution and annotation, including both coreference and types of anaphora such as bridging references resolution and discourse deixis, can be presented.
+        </span>
+      </div>
+
+      <!-- not working right now-->
+      <!--  -->
+    </div>
+  </div>
+  
+  <div class="col-md-6 col-sm-12 p-3">
+    <div class="card p-3 shadow p-3 mb-5 bg-light rounded"
+      style="box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2); height:100%;">
+
+      <div class="m-3 text-muted text-center">
+        <h4>
+          <a href="workshop_CRAC-2.html" class="main-title">
+            CRAC-2
+          </a>
+        </h4>
+      </div>
+
+      <div class="m-3 text-muted text-center">
+        <span class="card-title h3">
+          Since 2016, the yearly CRAC (and its predecessor, CORBON) workshop has become the primary forum for researchers interested in the computational modeling of reference, anaphora, and coreference to discuss and publish their results. Over the years, this workshop series has successfully organized five shared tasks, which stimulated interest in new problems in this area of research, facilitated the discussion and dissemination of results on new problems/directions (e.g., multimodal reference resolution), and helped expand the coreference community that used to be dominated by European researchers to include young researchers from the Americas. The aim of the workshop is to provide a forum where work on all aspects of computational work on anaphora resolution and annotation, including both coreference and types of anaphora such as bridging references resolution and discourse deixis, can be presented.
+        </span>
+      </div>
+
+      <!-- not working right now-->
+      <!--  -->
+    </div>
+  </div>
+  
+  <div class="col-md-6 col-sm-12 p-3">
+    <div class="card p-3 shadow p-3 mb-5 bg-light rounded"
+      style="box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2); height:100%;">
+
+      <div class="m-3 text-muted text-center">
+        <h4>
+          <a href="workshop_CoNLL.html" class="main-title">
+            CoNLL
+          </a>
+        </h4>
+      </div>
+
+      <div class="m-3 text-muted text-center">
+        <span class="card-title h3">
+          CoNLL is a yearly conference organized by SIGNLL (ACL&#39;s Special Interest Group on Natural Language Learning), focusing on theoretically, cognitively and scientifically motivated approaches to computational linguistics. This year, CoNLL will be colocated with EMNLP 2023. Registrations for CoNLL can be made through EMNLP (workshop 1).
+        </span>
+      </div>
+
+      <!-- not working right now-->
+      <!--  -->
+    </div>
+  </div>
+  
+  <div class="col-md-6 col-sm-12 p-3">
+    <div class="card p-3 shadow p-3 mb-5 bg-light rounded"
+      style="box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2); height:100%;">
+
+      <div class="m-3 text-muted text-center">
+        <h4>
+          <a href="workshop_CoNLL-2.html" class="main-title">
+            CoNLL-2
+          </a>
+        </h4>
+      </div>
+
+      <div class="m-3 text-muted text-center">
+        <span class="card-title h3">
+          CoNLL is a yearly conference organized by SIGNLL (ACL&#39;s Special Interest Group on Natural Language Learning), focusing on theoretically, cognitively and scientifically motivated approaches to computational linguistics. This year, CoNLL will be colocated with EMNLP 2023. Registrations for CoNLL can be made through EMNLP (workshop 1).
+        </span>
+      </div>
+
+      <!-- not working right now-->
+      <!--  -->
+    </div>
+  </div>
+  
+  <div class="col-md-6 col-sm-12 p-3">
+    <div class="card p-3 shadow p-3 mb-5 bg-light rounded"
+      style="box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2); height:100%;">
+
+      <div class="m-3 text-muted text-center">
+        <h4>
+          <a href="workshop_GEM.html" class="main-title">
+            GEM
+          </a>
+        </h4>
+      </div>
+
+      <div class="m-3 text-muted text-center">
+        <span class="card-title h3">
+          &#34;Natural language generation is one of the most active research areas within NLP and its barrier of entry has reduced dramatically. While applying supervised state of the art models to new data sets is becoming easier, the evaluation of models is becoming more challenging as models can produce completely fluent but meaningless or subtly flawed output. This leads to a disconnect between real-world needs of generation models and published research. Most of the disconnect can be bridged via in-depth evaluation and documentation of both data and models. 
+To that end, the GEM workshop has three core goals: (1) Encourage the development of (semi-) automatic model audits and improved human evaluation strategies, (2) Popularize model evaluations in languages beyond English, (3) Provide a platform for discussions around evaluations to bridge the gap between industry and academia.&#34;
+        </span>
+      </div>
+
+      <!-- not working right now-->
+      <!--  -->
+    </div>
+  </div>
+  
+  <div class="col-md-6 col-sm-12 p-3">
+    <div class="card p-3 shadow p-3 mb-5 bg-light rounded"
+      style="box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2); height:100%;">
+
+      <div class="m-3 text-muted text-center">
+        <h4>
+          <a href="workshop_GenBench.html" class="main-title">
+            GenBench
+          </a>
+        </h4>
+      </div>
+
+      <div class="m-3 text-muted text-center">
+        <span class="card-title h3">
+          &#34;The ability to generalise well is often mentioned as one of the primary desiderata for models of natural language processing (NLP). However, how generalisation should be defined and evaluated, or when it is particularly important, is a far from trivial question. The GenBench workshop on generalisation (benchmarking) in NLP aims to provide a platform to discuss challenging questions related to generalisation in NLP and establish a shared platform for state-of-the-art generalisation testing. We invited submitters to contribute work discussing generalisation in NLP and also held a collaborative benchmarking task, for which we called for submissions of challenging generalisation tests. \\ \\
+
+In this first edition of the workshop, we have 10 archival papers in our main track, 7 archival papers for our collaborative benchmarking track, and 6 extended abstracts. The workshop also provides a platform for the authors of 29 EMNLP findings paper related the workshop&#39;s topic to present their work as a poster at the workshop. In addition to poster sessions, we furthermore have three exciting invited speakers -- Adina Williams, Anna Rogers and Tatsunori Hashimoto. They will talk about challenges in evaluating LLMs, how to consider emergent properties from the perspective of generalisation, and evaluating generalisation in the era of instruction tuning, respectively. We will end the day with an exciting panel in which we discuss challenging questions related to generalisation.
+
+The workshop would not have been possible without the dedication of the programme committee, whom we would like to thank for their contributions. We would also like to thank Amazon for their sponsorship of 5000 dollars, which we used to fund one of our invited speakers, to grant travel awards to allow participants that could otherwise not have attended to participate in the workshop, and to grant two awards, to the best submitted paper and best submitted benchmark. Lastly, we are grateful to our invited speakers, Adina Williams, Anna Rogers, and Tatsunori Hashimoto, for contributing to our programme.&#34;
+        </span>
+      </div>
+
+      <!-- not working right now-->
+      <!--  -->
+    </div>
+  </div>
+  
+  <div class="col-md-6 col-sm-12 p-3">
+    <div class="card p-3 shadow p-3 mb-5 bg-light rounded"
+      style="box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2); height:100%;">
+
+      <div class="m-3 text-muted text-center">
+        <h4>
+          <a href="workshop_LChange-23.html" class="main-title">
+            LChange-23
+          </a>
+        </h4>
+      </div>
+
+      <div class="m-3 text-muted text-center">
+        <span class="card-title h3">
+          The LChange workshop is an avenue on state-of-the-art computational methodologies, theories and digital text resources on exploring the time-varying nature of human language. The aim of this workshop is three-fold. First, we want to provide pioneering researchers who work on computational methods, evaluation, and large-scale modelling of language change an outlet for disseminating cutting-edge research on topics concerning language change. We particularly support discussion on the evaluation of computational methodologies for uncovering language change. Second, we want to bring together domain experts across disciplines by connecting researchers in historical linguistics with those that develop and test computational methods for detecting semantic change and laws of semantic change; and those that need knowledge (of the occurrence and shape) of language change, for example, in digital humanities and computational social sciences where text mining is applied to diachronic corpora subject to e.g., lexical semantic change. Third, the detection and modelling of language change using diachronic text and text mining raise fundamental theoretical and methodological challenges for future research.
+        </span>
+      </div>
+
+      <!-- not working right now-->
+      <!--  -->
+    </div>
+  </div>
+  
+  <div class="col-md-6 col-sm-12 p-3">
+    <div class="card p-3 shadow p-3 mb-5 bg-light rounded"
+      style="box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2); height:100%;">
+
+      <div class="m-3 text-muted text-center">
+        <h4>
+          <a href="workshop_MRL.html" class="main-title">
+            MRL
+          </a>
+        </h4>
+      </div>
+
+      <div class="m-3 text-muted text-center">
+        <span class="card-title h3">
+          TBD
+        </span>
+      </div>
+
+      <!-- not working right now-->
+      <!--  -->
+    </div>
+  </div>
+  
+  <div class="col-md-6 col-sm-12 p-3">
+    <div class="card p-3 shadow p-3 mb-5 bg-light rounded"
+      style="box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2); height:100%;">
+
+      <div class="m-3 text-muted text-center">
+        <h4>
+          <a href="workshop_NILLI.html" class="main-title">
+            NILLI
+          </a>
+        </h4>
+      </div>
+
+      <div class="m-3 text-muted text-center">
+        <span class="card-title h3">
+          Collaborative dialogues with automated systems through language interactions have become ubiquitous, wherein it is becoming common from setting an alarm to planning one’s day through language interactions. With recent advances in dialogue research, embodied learning and using language as a mode of instruction for learning agents there is, now, a scope for realizing domains that can assume agents with primitive task knowledge and a continual interact-and-learn procedure to systematically acquire knowledge through verbal/non-verbal interactions. The research direction of building interactive learning agents facilitates the possibility of agents to have advanced interactions like taking instructions by being a pragmatic listener, asking for more samples, generating rationales for predictions, interactions to interpret learning dynamics, or even identifying or modifying a new task that can be used towards building effective learning-to-learn mechanisms. In a way, with verbal/non-verbal interactive medium this interdisciplinary field unifies research paradigms of lifelong learning, natural language processing, embodied learning, reinforcement learning, robot learning and multi-modal learning towards building interactive and interpretable AI.
+        </span>
+      </div>
+
+      <!-- not working right now-->
+      <!--  -->
+    </div>
+  </div>
+  
+  <div class="col-md-6 col-sm-12 p-3">
+    <div class="card p-3 shadow p-3 mb-5 bg-light rounded"
+      style="box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2); height:100%;">
+
+      <div class="m-3 text-muted text-center">
+        <h4>
+          <a href="workshop_NLLP.html" class="main-title">
+            NLLP
+          </a>
+        </h4>
+      </div>
+
+      <div class="m-3 text-muted text-center">
+        <span class="card-title h3">
+          The Natural Legal Language Processing (NLLP) 2023 workshop, now at its fifth edition, brings together researchers, practitioners, policy makers from around the world who develop NLP techniques within the legal domain. NLP technologies allow legal practitioners and decision-makers to make more informed decisions, optimize legal strategies and serve clients/consumers/citizens in a more cost-efficient way. The fast-paced, multi-jurisdictional world of law is a growing area of application for NLP, offering data sources which are often multilingual and multimodal. For example, evidentiary data sets used in private and public legal practice require in-depth image analysis and speech recognition technologies to complement text data (e.g., opinions and judgments) currently dominating the area. Legal NLP research can create societal impact by informing regulators how to best protect certain categories of citizens at risk (e.g. vulnerable consumers), or by enhancing citizen education and access to justice. This is an exciting opportunity to expand the boundaries of our field by identifying new problems and exploring new data as it interacts with the full inventory of NLP and machine learning approaches.
+        </span>
+      </div>
+
+      <!-- not working right now-->
+      <!--  -->
+    </div>
+  </div>
+  
+  <div class="col-md-6 col-sm-12 p-3">
+    <div class="card p-3 shadow p-3 mb-5 bg-light rounded"
+      style="box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2); height:100%;">
+
+      <div class="m-3 text-muted text-center">
+        <h4>
+          <a href="workshop_NLP-OSS.html" class="main-title">
+            NLP-OSS
+          </a>
+        </h4>
+      </div>
+
+      <div class="m-3 text-muted text-center">
+        <span class="card-title h3">
+          The primary objective of this workshop is to further the sharing of insights on the engineering and community aspects of creating, developing, and maintaining NLP open source software (OSS), which we seldom talk about in scientific publications. Our secondary goal is to promote synergies between different open source projects and encourage cross-software collaborations and comparisons.
+        </span>
+      </div>
+
+      <!-- not working right now-->
+      <!--  -->
+    </div>
+  </div>
+  
+  <div class="col-md-6 col-sm-12 p-3">
+    <div class="card p-3 shadow p-3 mb-5 bg-light rounded"
+      style="box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2); height:100%;">
+
+      <div class="m-3 text-muted text-center">
+        <h4>
+          <a href="workshop_NewSumm.html" class="main-title">
+            NewSumm
+          </a>
+        </h4>
+      </div>
+
+      <div class="m-3 text-muted text-center">
+        <span class="card-title h3">
+          NewSumm workshop, a key forum in its fourth edition, aims to develop intelligent systems for producing concise, fluent, and accurate summaries in natural language processing. It unites experts from diverse fields like summarization, language generation, and psycholinguistics to explore automatic summarization&#39;s critical aspects. The comprehensive agenda addresses innovative paradigms, multilingual setups, novel evaluation methods, and future research directions. This edition, following successful predecessors at EMNLP 2017, 2019, and 2021, received 31 paper submissions with a 42% acceptance rate. It features five esteemed speakers, including Kathleen McKeown, Jackie Cheung, Rui Zhang, Iz Beltagy, and Chenguang Zhu, representing a broad spectrum of expertise in the field. The workshop aims to build a cohesive research community and develop new tools and resources for academia, industry, and government.
+        </span>
+      </div>
+
+      <!-- not working right now-->
+      <!--  -->
+    </div>
+  </div>
+  
+  <div class="col-md-6 col-sm-12 p-3">
+    <div class="card p-3 shadow p-3 mb-5 bg-light rounded"
+      style="box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2); height:100%;">
+
+      <div class="m-3 text-muted text-center">
+        <h4>
+          <a href="workshop_Pan-DL.html" class="main-title">
+            Pan-DL
+          </a>
+        </h4>
+      </div>
+
+      <div class="m-3 text-muted text-center">
+        <span class="card-title h3">
+          This workshop will focus on all aspects of pattern-based approaches, including their application, representation, and interpretability, as well as their strengths and weaknesses relative to state-of-the-art machine learning approaches. It will also explore ways of combining the strengths of pattern-based, deep learning and other statistical methods.
+        </span>
+      </div>
+
+      <!-- not working right now-->
+      <!--  -->
+    </div>
+  </div>
+  
+  <div class="col-md-6 col-sm-12 p-3">
+    <div class="card p-3 shadow p-3 mb-5 bg-light rounded"
+      style="box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2); height:100%;">
+
+      <div class="m-3 text-muted text-center">
+        <h4>
+          <a href="workshop_SpLU-RoboNLP.html" class="main-title">
+            SpLU-RoboNLP
+          </a>
+        </h4>
+      </div>
+
+      <div class="m-3 text-muted text-center">
+        <span class="card-title h3">
+          We wish the workshop to be the first step in building a community of researchers from different areas of NLP, both applied and theoretical, who are interested in pattern-based approaches and who use them in their work (e.g., industry practitioners and domain experts).
+        </span>
+      </div>
+
+      <!-- not working right now-->
+      <!--  -->
+    </div>
+  </div>
+  
+  <div class="col-md-6 col-sm-12 p-3">
+    <div class="card p-3 shadow p-3 mb-5 bg-light rounded"
+      style="box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2); height:100%;">
+
+      <div class="m-3 text-muted text-center">
+        <h4>
+          <a href="workshop_WMT23.html" class="main-title">
+            WMT23
+          </a>
+        </h4>
+      </div>
+
+      <div class="m-3 text-muted text-center">
+        <span class="card-title h3">
+          The long-standing Conference on Machine Translation (building on the earlier Workshop on Statistical Machine Translation) brings together researchers from the area of machine translation and features selected research papers to be presented at the conference. The conference also features a large number of shared tasks: a general translation task (former news task), a terminology translation task, a literary translation task, a word-level autocompletion task, a sign language translation task, a biomedical translation task, a indic languages translation task, an African languages translation task, a metrics evaluation task, a quality estimation task, a task to introduce novel machine translation testsuites, an automatic post-editing task, and a parallel data curation task.
+        </span>
+      </div>
+
+      <!-- not working right now-->
+      <!--  -->
+    </div>
+  </div>
+  
+  <div class="col-md-6 col-sm-12 p-3">
+    <div class="card p-3 shadow p-3 mb-5 bg-light rounded"
+      style="box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2); height:100%;">
+
+      <div class="m-3 text-muted text-center">
+        <h4>
+          <a href="workshop_WMT23-2.html" class="main-title">
+            WMT23-2
+          </a>
+        </h4>
+      </div>
+
+      <div class="m-3 text-muted text-center">
+        <span class="card-title h3">
+          The long-standing Conference on Machine Translation (building on the earlier Workshop on Statistical Machine Translation) brings together researchers from the area of machine translation and features selected research papers to be presented at the conference. The conference also features a large number of shared tasks: a general translation task (former news task), a terminology translation task, a literary translation task, a word-level autocompletion task, a sign language translation task, a biomedical translation task, a indic languages translation task, an African languages translation task, a metrics evaluation task, a quality estimation task, a task to introduce novel machine translation testsuites, an automatic post-editing task, and a parallel data curation task.
+        </span>
+      </div>
+
+      <!-- not working right now-->
+      <!--  -->
+    </div>
+  </div>
+  
+  <div class="col-md-6 col-sm-12 p-3">
+    <div class="card p-3 shadow p-3 mb-5 bg-light rounded"
+      style="box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2); height:100%;">
+
+      <div class="m-3 text-muted text-center">
+        <h4>
+          <a href="workshop_WiNLP.html" class="main-title">
+            WiNLP
+          </a>
+        </h4>
+      </div>
+
+      <div class="m-3 text-muted text-center">
+        <span class="card-title h3">
+          The WiNLP workshop aims to foster an inclusive and diverse ACL environment by highlighting the work of underrepresented groups (URG) or anyone who self-identifies within an underrepresented demographic. The 2023 iteration of the workshop will build on the successes of prior iterations (2017-2022) with a focus on diversity in scientific background, discipline, training, obtained degrees, and seniority. Additionally, this iteration will target women and nonbinary researchers, the queer community, researchers outside the U.S. and Europe, and neurodiverse researchers in NLP. The full-day event will include a call for abstracts, a combination of invited talks, a panel discussion, oral presentations, and poster sessions. The workshop provides an opportunity for junior members of the community to showcase their work and connect with senior mentors for feedback and career advice. WiNLP also offers recruitment opportunities with leading industrial and academic labs. Most importantly, the workshop provides an accepting space that lowers structural barriers that make it difficult for URGs to join and collaborate with their NLP colleagues. The opportunity to present at the workshop is intended for URGs, and allies are encouraged to attend and support speakers. For more details on the vision, mission, and activities of WiNLP, visit http://www.winlp.org
+        </span>
+      </div>
+
+      <!-- not working right now-->
+      <!--  -->
+    </div>
+  </div>
+  
+</div>
+
+<script src="static/js/add-to-calendar.js"></script>
+<script>
+
+  let ouicalData;
+  let targetNode;
+  let calendarNodeInner;
+  let calendarNodeSpan;
+  let parser = new DOMParser();
+  let calendarNames = Array("google", "off365", "outlook", "ical");
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</script>
+</div>
+
+<script src="static/js/time-extend.js"></script>
+<script>
+  $(document).ready(()=>{
+    add_local_tz('.session_times');
+  })
+</script>
+
+
+      </div>
+    </div>
+    
+    
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9X8H03BYC2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-9X8H03BYC2");
+    </script>
+
+    <!-- Footer -->
+    <footer class="footer bg-light p-4">
+      <div class="container">
+        <p class="float-left">
+          <img src="static/images/emnlp2023/emnlp-2023-logo.png" height="45px"
+            width="auto" align="center">
+          <span class="lead">EMNLP 2023</span>
+        </p>
+        <p class="float-right"><a href="#" class="text-dark">Back to Top</a></p>
+        <p class="text-center">© 2023 Association for Computational Linguistics</p>
+      </div>
+    </footer>
+
+    <!-- Code for hash tags -->
+    <script type="text/javascript">
+      $(document).ready(function () {
+        if (location.hash !== "") {
+          $('a[href="' + location.hash + '"]').tab("show");
+        }
+
+        $("a[data-toggle='tab']").on("shown.bs.tab", function (e) {
+          var hash = $(e.target).attr("href");
+          if (hash.substr(0, 1) == "#") {
+            var position = $(window).scrollTop();
+            location.replace("#" + hash.substr(1));
+            $(window).scrollTop(position);
+          }
+        });
+      });
+    </script>
+    <script src="static/js/lazy_load.js"></script>
+    
+    <div class="modal left fade" id="chatsModal" tabindex="" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document" style="max-height: 100% !important;">
+        <div class="modal-content" style="max-height: 100% !important;">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel">Active Chats</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div style="margin-bottom: 1em;">
+    <div class="stats-last-update text-muted" id="highly-active-chats-last-update"></div>
+    <a id="highly-active-chats-btn-refresh" href="#" class="text-primary" style="display: none;">Refresh now</a>
+</div>
+
+<div id="highly-active-chats-list">
+</div>
+
+<div class="text-center" id="highly-active-chats-progress-bar" style="margin-bottom: 80em;">
+    <div class="spinner-border text-primary" style="margin-top: 3em; width: 3rem; height: 3rem;" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+</div>
+
+<br/>
+<p class="text-muted">
+    <strong>How it works: </strong>
+    We calculate the number of new messages for every channel in the last N seconds. Then, we sort them descendingly.
+    Channels with no new messages will be randomly shuffled. Please note that the number of messages might not be accurate.
+</p>
+
+<script src="static/js/highly-active-chats.js"></script>
+<script>
+    let channel_stats_server = "https://emnlp2020-channels-stats.azure-api.net"
+    $(document).ready( function () {
+        $('[data-toggle="tooltip"]').tooltip();
+        //load_stats();
+    });
+</script>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>
